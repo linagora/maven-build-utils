@@ -4,14 +4,16 @@ import java.util.Set;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Objects.ToStringHelper;
-import com.lassekoskela.time.Duration;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 
 public class Project extends MavenItem {
 
 	private final Set<Phase> phases;
 	
-	public Project(String name, Duration duration, Set<Phase> phases) {
-		super(name, duration);
+	public Project(String name, Set<Phase> phases) {
+		super(name);
 		this.phases = phases;
 	}
 	
@@ -19,8 +21,20 @@ public class Project extends MavenItem {
 		return phases;
 	}
 	
-	public void addPhase(Phase phase) {
+	public Phase addPhase(Phase phase) {
 		phases.add(phase);
+		return phase;
+	}
+
+	public Optional<Phase> getPhase(final String phaseName) {
+		return FluentIterable
+				.from(phases)
+				.firstMatch(new Predicate<Phase>() {
+					@Override
+					public boolean apply(Phase input) {
+						return input.getItemId().equals(phaseName);
+					}
+				});
 	}
 
 	@Override
