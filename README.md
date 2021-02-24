@@ -1,3 +1,5 @@
+![Archived](https://img.shields.io/badge/Current_Status-archived-blue?style=flat)
+
 # DESCRIPTION
 
 _maven-build-utils_ is a collection of build-related utilities in the form 
